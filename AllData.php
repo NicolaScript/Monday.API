@@ -33,11 +33,23 @@ if (curl_errno($ch)) {
 } else {
 
     $data = json_decode($response, true);
+
     file_put_contents('response.txt', "Value: " . print_r($data, TRUE) . " \n", FILE_APPEND);
 
     // Verificar si se obtuvo la información del elemento
     if (isset($data['data']['items'][0]['column_values'])) {
         $columnValues = $data['data']['items'][0]['column_values'];
+
+        foreach ($columnValues as $column) {
+            $id = $column['id'];
+            $text = $column['text'];
+            $value = $column['value'];
+
+            echo "ID: $id<br>";
+            echo "Text: $text<br>";
+            echo "Value: " . json_encode(json_decode($value), JSON_PRETTY_PRINT) . "<br>";
+            echo "<br>";
+        }
 
         //echo '<pre>';
         //   var_dump($columnValues);
