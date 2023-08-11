@@ -1,4 +1,11 @@
+API_MONDAY
+https://api.monday.com/v2
+
 YOUR_API_TOKEN
-<<Token>>
+eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI3NDAyMjc0MSwiYWFpIjoxMSwidWlkIjo0NTkyNzA2NiwiaWFkIjoiMjAyMy0wOC0wOVQxMTo1Nzo1NS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTY4OTUwNjAsInJnbiI6ImV1YzEifQ.nVLlhCvblwMnz3VyXEBc1_sQ7x3fX4j9eNwvrtmYifk
+
 YOUR_ITEM_ID
-<<ID>>
+1235849079
+
+SLACK_WEBHOOK
+https://hooks.slack.com/services/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
