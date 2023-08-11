@@ -1,5 +1,35 @@
 <?php
 
+// Función para obtener el valor de una columna por su ID
+function getColumnValue($columnValues, $columnId) {
+    foreach ($columnValues as $column) {
+        if ($column['id'] === $columnId) {
+            return $column['value'];
+        }
+    }
+    return null;
+}
+
+// Función para enviar una notificación a Slack
+function sendSlackNotification($webhookUrl, $message) {
+    $data = array('text' => $message);
+    $jsonData = json_encode($data);
+
+    $headers = array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($jsonData)
+    );
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $webhookUrl);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_exec($ch);
+    curl_close($ch);
+}
+
+// Obtener configuración desde el archivo
 $configFile = file('config.txt');
 $apiToken = trim($configFile[1]);
 $itemId = trim($configFile[3]);
@@ -7,7 +37,6 @@ $itemId = trim($configFile[3]);
 // URL de la API de monday.com para obtener información del elemento
 $url = 'https://api.monday.com/v2';
 
-// Configurar la solicitud cURL
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -15,7 +44,6 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     'Authorization: ' . $apiToken
 ));
 
-// Crear el cuerpo de la solicitud
 $data = array(
     'query' => 'query { items (ids: ' . $itemId . ') { column_values { id text value } } }'
 );
@@ -24,39 +52,30 @@ $jsonData = json_encode($data);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
 
-// Realizar la solicitud cURL y obtener la respuesta
 $response = curl_exec($ch);
 
-// Verificar si hubo un error en la solicitud cURL
 if (curl_errno($ch)) {
     echo "Error al conectarse con la API de monday.com: " . curl_error($ch);
 } else {
-    // Analizar la respuesta JSON
     $data = json_decode($response, true);
 
-    // Verificar si se obtuvo la información del elemento
     if (isset($data['data']['items'][0]['column_values'])) {
         $columnValues = $data['data']['items'][0]['column_values'];
 
-        // Buscar el valor del seguimiento de tiempo en las columnas
-        $timeTrackingValue = null;
-        foreach ($columnValues as $column) {
-            if ($column['id'] === 'duration') {
-                $timeTrackingValue = $column['value'];
-                break;
-            }
-        }
+        $timeTrackingValue = getColumnValue($columnValues, 'duration');
 
-        // Verificar si se encontró el valor del seguimiento de tiempo
         if ($timeTrackingValue !== null) {
             $timeTrackingData = json_decode($timeTrackingValue, true);
 
-            // Verificar si el seguimiento de tiempo está encendido o apagado
-            if (isset($timeTrackingData['running']) && $timeTrackingData['running']) {
-                echo "El seguimiento de tiempo está encendido en el elemento con ID " . $itemId;
-            } else {
-                echo "El seguimiento de tiempo está apagado en el elemento con ID " . $itemId;
-            }
+            $isTimeTrackingRunning = isset($timeTrackingData['running']) && $timeTrackingData['running'];
+
+            $slackMessage = "El seguimiento de tiempo está " . ($isTimeTrackingRunning ? 'encendido' : 'apagado') . " en el elemento con ID $itemId";
+
+            $slackWebhookUrl = 'https://hooks.slack.com/services/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';
+
+            sendSlackNotification($slackWebhookUrl, $slackMessage);
+
+            echo "Notificación enviada a Slack correctamente.";
         } else {
             echo "El elemento no tiene una columna de seguimiento de tiempo";
         }
@@ -65,8 +84,6 @@ if (curl_errno($ch)) {
     }
 }
 
-// Cerrar la solicitud cURL
 curl_close($ch);
 
 ?>
-
