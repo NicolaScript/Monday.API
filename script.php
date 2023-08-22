@@ -1,8 +1,10 @@
 <?php
 // Configuración de la API de Monday.com
-$url = 'https://api.monday.com/v2';
 $configFile = file('config.txt');
-$apiToken = trim($configFile[5]);
+$url = trim($configFile[1]);
+$apiToken = trim($configFile[7]);
+
+
 
 // Realizar la consulta para obtener los workspaces
 $ch = curl_init($url);
@@ -44,11 +46,14 @@ curl_close($ch);
 // Decodificar la respuesta JSON para workspaces
 $responseWorkspacesData = json_decode($responseWorkspaces, true);
 
-
+$resultsBySubscriber = array();
+global $message;
 
 // Verificar si se obtuvieron los datos correctamente para workspaces
 if (isset($responseWorkspacesData['data']['workspaces'])) {
     $workspaces = $responseWorkspacesData['data']['workspaces'];
+
+    
 
     foreach ($workspaces as $workspace) {
         $workspaceId = $workspace['id'];
@@ -178,6 +183,7 @@ if (isset($responseWorkspacesData['data']['workspaces'])) {
                         if (isset($responseItemsData['data']['boards'][0]['items'])) {
                             $items = $responseItemsData['data']['boards'][0]['items'];
 
+                        
                             foreach ($items as $item) {
                                 $itemId = $item['id'];
                                 $itemName = $item['name'];
@@ -238,32 +244,35 @@ if (isset($responseWorkspacesData['data']['workspaces'])) {
                                                 }
                                             }
 
+                                            
+
                                             if ($timeTrackingValue !== null) {
                                                 $timeTrackingData = json_decode($timeTrackingValue, true);
                                                 if (isset($timeTrackingData['running']) && $timeTrackingData['running']) {
                                                     if ($isWeekday && $currentHour >= 9 && $currentHour <= 17) {
-                                                        echo "El usuario $subscriberName está trabajando en el elemento $itemName en horario laboral.<br/>";
+                                                        $message = "Está trabajando en la tarea: *$itemName* en horario laboral.";
                                                     } elseif (!$isWeekday) {
-                                                        echo "El usuario $subscriberName está trabajando en el elemento $itemName fuera de un día laboral.<br/>";
+                                                        $message = "Está trabajando en la tarea: *$itemName* fuera de un día laboral.";
                                                     } elseif ($currentHour > 17) {
-                                                        echo "El usuario $subscriberName se quedó trabajando después de hora en el elemento $itemName.<br/>";
+                                                        $message = "Se quedó trabajando después de hora en la tarea: *$itemName*.";
                                                     } elseif ($currentHour < 9){
-                                                        echo "El usuario $subscriberName está trabajando fuera de hora en el elemento $itemName.<br/>";
+                                                        $message = "Está trabajando fuera de hora en la tarea: *$itemName*.";
                                                     }
                                                 } else {
                                                     if ($isWeekday && $currentHour >= 9 && $currentHour <= 17) {
-                                                        echo "El usuario $subscriberName no está trabajando en el elemento $itemName durante el horario laboral.<br/>";
+                                                        $message = "No está trabajando en la tarea: *$itemName* durante el horario laboral.";
                                                     } else {
-                                                        echo "El usuario $subscriberName está descansando<br/>";
+                                                        $message = "Está descansando";
                                                     }
                                                 }
-
                                             }
+
+                                            if (!isset($userResponses[$subscriberName])) {
+                                                $userResponses[$subscriberName] = array();
+                                            }
+                                            $userResponses[$subscriberName][] = $message;
                                         }
-
                                     }
-
-
                                     // foreach ($columnValues as $column) {
                                     //     $columnTitle = $column['title'];
                                     //     $columnText = $column['text'];
@@ -292,4 +301,47 @@ if (isset($responseWorkspacesData['data']['workspaces'])) {
 } else {
     echo "No se pudieron obtener los nombres de los workspaces.<br/>";
 }
+
+//Variable de mensaje para Slak
+$slakMessage = '';
+
+// Imprimir los resultados de manera ordenada
+foreach ($userResponses as $subscriberName => $responses) {
+    $slakMessage .= "*$subscriberName:*\n";
+    foreach ($responses as $response) {
+        $slakMessage .= "- $response\n";
+    }
+    $slakMessage .= "\n";
+}
+
+// URL del webhook de Slack
+$slackWebhookUrl = trim($configFile[10]);
+
+// Configurar los datos para la solicitud cURL
+$slackData = array('text' => $slakMessage);
+$slackDataString = json_encode($slackData);
+$slackHeaders = array(
+    'Content-Type: application/json',
+    'Content-Length: ' . strlen($slackDataString)
+);
+
+// Inicializar la solicitud cURL a la URL del webhook de Slack
+$slackCh = curl_init();
+curl_setopt($slackCh, CURLOPT_URL, $slackWebhookUrl);
+curl_setopt($slackCh, CURLOPT_CUSTOMREQUEST, 'POST');
+curl_setopt($slackCh, CURLOPT_POSTFIELDS, $slackDataString);
+curl_setopt($slackCh, CURLOPT_HTTPHEADER, $slackHeaders);
+
+// Ejecutar la solicitud cURL a Slack
+$slackResponse = curl_exec($slackCh);
+
+// Verificar si hubo un error en la solicitud cURL a Slack
+if (curl_errno($slackCh)) {
+    echo "Error al enviar la notificación a Slack: " . curl_error($slackCh);
+} else {
+    echo " Notificación enviada a Slack correctamente.";
+}
+
+// Cerrar la sesión cURL
+curl_close($slackCh);
 ?>
