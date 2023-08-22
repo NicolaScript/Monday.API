@@ -123,15 +123,15 @@ if (isset($responseWorkspacesData['data']['workspaces'])) {
 
                 //echo "<h2>Carpeta ID: $folderId, Nombre: $folderName</h2>";
 
-                // Verificar si la carpeta tiene hijos (subcarpetas)
+                // Verificar si la carpeta tiene hijos (tableros)
                 if (isset($folder['children'])) {
-                    $subfolders = $folder['children'];
+                    $boards = $folder['children'];
 
-                    foreach ($subfolders as $subfolder) {
-                        $subfolderId = $subfolder['id'];
-                        $subfolderName = $subfolder['name'];
+                    foreach ($boards as $board) {
+                        $boardId = $board['id'];
+                        $boardName = $board['name'];
 
-                        //echo "<h3 style='margin-left: 20px;'>Tablero ID: $subfolderId, Nombre: $subfolderName</h3>";
+                        //echo "<h3 style='margin-left: 20px;'>Tablero ID: $boardId, Nombre: $boardName</h3>";
 
                         // Realizar la consulta para obtener elementos/items
                         $ch = curl_init($url);
@@ -143,13 +143,14 @@ if (isset($responseWorkspacesData['data']['workspaces'])) {
 
                         $itemsData = array(
                             'query' => "query {
-                                boards(ids: [$subfolderId]) {
+                                boards(ids: [$boardId]) {
                                     items {
                                         id
                                         name
                                         subscribers {
                                             id
                                             name
+                                            email
                                             time_zone_identifier
                                         }
                                         column_values {
@@ -223,6 +224,7 @@ if (isset($responseWorkspacesData['data']['workspaces'])) {
                                         foreach ($subscribers as $subscriber) {
                                             $subscriberId = $subscriber['id'];
                                             $subscriberName = $subscriber['name'];
+                                            $subscriberEmail = $subscriber['email'];
                                             $timeZoneIdentifier = $subscriber['time_zone_identifier'];
 
                                             // Obtener la fecha y hora actual en la zona horaria del suscriptor
@@ -281,9 +283,6 @@ if (isset($responseWorkspacesData['data']['workspaces'])) {
 
                                     //     echo "<p style='margin-left: 80px;'><strong>Columna:</strong> $columnTitle, Texto: $columnText, Valor: $columnValue, Tipo: $columnType</p>";
                                     // }
-
-                                    
-
                                 } else {
                                     echo "<p style='margin-left: 80px;'>No se pudieron obtener las columnas de este elemento.</p>";
                                 }
@@ -344,4 +343,29 @@ if (curl_errno($slackCh)) {
 
 // Cerrar la sesión cURL
 curl_close($slackCh);
+
+
+// // Envío de correos a usuarios
+// foreach ($userResponses as $subscriberName => $responses) {
+//     // Obtener el correo del usuario
+//     $subscriberEmail = $userEmails[$subscriberName];
+    
+//     // Verificar las condiciones y enviar el correo correspondiente
+//     if (in_array($subscriberName, $restingUsers)) {
+//         // Enviar correo sobre descanso
+//         $subject = "Hora de descansar!";
+//         $body = "Gracias por dar la milla extra, pero nos preocupa el burnout. Si puedes, preferiríamos que descanses. Trabaja para vivir y no vivas para trabajar.";
+//     } elseif (isset($userTasks[$subscriberName]) && count($userTasks[$subscriberName]) === 0) {
+//         // Enviar correo sobre ninguna tarea asignada
+//         $subject = "hora de trabajar!";
+//         $taskList = implode(", ", array_unique($userTasks[$subscriberName]));
+//         $body = "No tienes ninguna tarea asignada, te sugiero que actives alguna de las siguientes tareas: $taskList";
+//     } else {
+//         continue;
+//     }
+    
+//     // Enviar correo usando la función de envío de correo que estés utilizando
+//     enviarCorreo($subscriberEmail, $subject, $body);
+//}
+
 ?>
