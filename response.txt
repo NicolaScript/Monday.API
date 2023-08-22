@@ -138,3 +138,182 @@ Value: Array
     [account_id] => 16895060
 )
  
+Value: Array
+(
+    [data] => Array
+        (
+            [items] => Array
+                (
+                    [0] => Array
+                        (
+                            [column_values] => Array
+                                (
+                                    [0] => Array
+                                        (
+                                            [id] => subitems
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [1] => Array
+                                        (
+                                            [id] => lookup
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [2] => Array
+                                        (
+                                            [id] => duration
+                                            [text] => 54:07:56
+                                            [value] => {"running":false,"duration":194876,"startDate":1691583836,"changed_at":"2023-08-11T12:03:43.571Z","additional_value":[{"id":1575024,"account_id":16895060,"project_id":1235849079,"column_id":"duration","started_user_id":45927066,"ended_user_id":45927066,"started_at":"2023-08-01T11:58:42Z","ended_at":"2023-08-01T12:00:19Z","manually_entered_start_time":false,"manually_entered_end_time":false,"manually_entered_start_date":false,"manually_entered_end_date":false,"created_at":"2023-08-01T11:58:44Z","updated_at":"2023-08-01T12:00:20Z","status":"active"},{"id":1579697,"account_id":16895060,"project_id":1235849079,"column_id":"duration","started_user_id":45927066,"ended_user_id":45927066,"started_at":"2023-08-01T15:50:05Z","ended_at":"2023-08-01T21:14:30Z","manually_entered_start_time":false,"manually_entered_end_time":false,"manually_entered_start_date":false,"manually_entered_end_date":false,"created_at":"2023-08-01T15:50:06Z","updated_at":"2023-08-01T21:14:31Z","status":"active"},{"id":1590379,"account_id":16895060,"project_id":1235849079,"column_id":"duration","started_user_id":45927066,"ended_user_id":45927066,"started_at":"2023-08-02T11:30:48Z","ended_at":"2023-08-02T12:14:30Z","manually_entered_start_time":false,"manually_entered_end_time":false,"manually_entered_start_date":false,"manually_entered_end_date":false,"created_at":"2023-08-02T11:30:49Z","updated_at":"2023-08-02T12:14:31Z","status":"active"},{"id":1657094,"account_id":16895060,"project_id":1235849079,"column_id":"duration","started_user_id":45927066,"ended_user_id":45927066,"started_at":"2023-08-09T11:30:18Z","ended_at":"2023-08-09T11:30:57Z","manually_entered_start_time":false,"manually_entered_end_time":false,"manually_entered_start_date":false,"manually_entered_end_date":false,"created_at":"2023-08-09T11:30:18Z","updated_at":"2023-08-09T11:30:56Z","status":"active"},{"id":1657536,"account_id":16895060,"project_id":1235849079,"column_id":"duration","started_user_id":45927066,"ended_user_id":45927066,"started_at":"2023-08-09T11:59:13Z","ended_at":"2023-08-09T12:16:59Z","manually_entered_start_time":false,"manually_entered_end_time":false,"manually_entered_start_date":false,"manually_entered_end_date":false,"created_at":"2023-08-09T11:59:13Z","updated_at":"2023-08-09T12:16:59Z","status":"active"},{"id":1657998,"account_id":16895060,"project_id":1235849079,"column_id":"duration","started_user_id":45927066,"ended_user_id":45927066,"started_at":"2023-08-09T12:23:56Z","ended_at":"2023-08-11T12:03:43Z","manually_entered_start_time":false,"manually_entered_end_time":false,"manually_entered_start_date":false,"manually_entered_end_date":false,"created_at":"2023-08-09T12:23:56Z","updated_at":"2023-08-11T12:03:44Z","status":"active"}]}
+                                        )
+
+                                    [3] => Array
+                                        (
+                                            [id] => task_owner
+                                            [text] => ncolombero@idoneo.com
+                                            [value] => {"changed_at":"2023-07-25T16:20:07.405Z","personsAndTeams":[{"id":45927066,"kind":"person"}]}
+                                        )
+
+                                    [4] => Array
+                                        (
+                                            [id] => status_18
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [5] => Array
+                                        (
+                                            [id] => task_status
+                                            [text] => Detenido
+                                            [value] => {"index":103,"post_id":null,"changed_at":"2023-08-03T12:24:10.254Z"}
+                                        )
+
+                                    [6] => Array
+                                        (
+                                            [id] => task_priority
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [7] => Array
+                                        (
+                                            [id] => task_type
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [8] => Array
+                                        (
+                                            [id] => task_estimation
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [9] => Array
+                                        (
+                                            [id] => link
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [10] => Array
+                                        (
+                                            [id] => dependent_on
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [11] => Array
+                                        (
+                                            [id] => date
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [12] => Array
+                                        (
+                                            [id] => check
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [13] => Array
+                                        (
+                                            [id] => item_id
+                                            [text] => 1235849079
+                                            [value] => 
+                                        )
+
+                                    [14] => Array
+                                        (
+                                            [id] => long_text
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [15] => Array
+                                        (
+                                            [id] => task_actual_effort
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                    [16] => Array
+                                        (
+                                            [id] => f_rmula
+                                            [text] => 
+                                            [value] => 
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [account_id] => 16895060
+)
+ 
+Value: Array
+(
+    [data] => Array
+        (
+            [items] => Array
+                (
+                )
+
+        )
+
+    [account_id] => 16895060
+)
+ 
+Value: Array
+(
+    [data] => Array
+        (
+            [items] => Array
+                (
+                )
+
+        )
+
+    [account_id] => 16895060
+)
+ 
+Value: Array
+(
+    [data] => Array
+        (
+            [items] => Array
+                (
+                )
+
+        )
+
+    [account_id] => 16895060
+)
+ 
