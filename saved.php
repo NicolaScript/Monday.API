@@ -1,8 +1,8 @@
 <?php
 // Configuración de la API de Monday.com
-$url = 'https://api.monday.com/v2';
 $configFile = file('config.txt');
-$apiToken = trim($configFile[5]);
+$url = trim($configFile[1]);
+$apiToken = trim($configFile[4]);
 
 // Realizar la consulta para obtener los workspaces
 $ch = curl_init($url);

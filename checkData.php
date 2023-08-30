@@ -1,11 +1,12 @@
 <?php
 
 $configFile = file('config.txt');
-$apiToken = trim($configFile[1]);
-$itemId = trim($configFile[3]);
+$url = trim($configFile[1]);
+$apiToken = trim($configFile[4]);
+$itemId = trim($configFile[13]);
 
 // URL de la API de monday.com para obtener información del elemento
-$url = 'https://api.monday.com/v2';
+
 
 // Configurar la solicitud cURL
 $ch = curl_init($url);

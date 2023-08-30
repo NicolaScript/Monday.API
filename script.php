@@ -2,7 +2,8 @@
 // Configuración de la API de Monday.com
 $configFile = file('config.txt');
 $url = trim($configFile[1]);
-$apiToken = trim($configFile[7]);
+$apiToken = trim($configFile[4]);
+$slackWebhookUrl = trim($configFile[10]);
 
 
 
@@ -312,9 +313,6 @@ foreach ($userResponses as $subscriberName => $responses) {
     }
     $slakMessage .= "\n";
 }
-
-// URL del webhook de Slack
-$slackWebhookUrl = trim($configFile[10]);
 
 // Configurar los datos para la solicitud cURL
 $slackData = array('text' => $slakMessage);

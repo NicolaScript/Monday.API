@@ -1,11 +1,11 @@
 <?php
 
 $configFile = file('config.txt');
-$apiToken = trim($configFile[3]);
-$itemId = trim($configFile[9]);
+$url = trim($configFile[1]);
+$apiToken = trim($configFile[4]);
+$slackWebhookUrl = trim($configFile[10]);
+$itemId = trim($configFile[13]);
 
-// URL de la API de monday.com para obtener información del elemento
-$url = 'https://api.monday.com/v2';
 
 // Configurar la solicitud cURL
 $ch = curl_init($url);
@@ -75,12 +75,6 @@ if (curl_errno($ch)) {
 
 // Cerrar la solicitud cURL
 curl_close($ch);
-
-
-
-
-// URL del webhook de Slack
-$slackWebhookUrl = 'https://hooks.slack.com/services/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';
 
 // Mensaje para enviar a Slack
 $message = "El seguimiento de tiempo está " . ($timeTrackingData['running'] ? 'encendido' : 'apagado') . " en el elemento con ID $itemId";
