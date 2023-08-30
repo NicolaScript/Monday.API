@@ -26,6 +26,13 @@ ITEM_ID
 
 Reemplazando <<...>> con los valores correspondientes.  
 
+## MVP.php
+
+Este script verifica de manera mínima si una tarea esta activa o no.
+
+1. Asegúrate de haber configurado `config.txt` con el token y el ID correctos.
+2. Ejecuta el script `MVP.php` desde la línea de comandos o en un servidor PHP.
+
 ## Script.php
 
 Este script verifica si el seguimiento de tiempo está encendido o apagado en una tarea específica.
