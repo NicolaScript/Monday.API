@@ -6,7 +6,8 @@ Este repositorio contiene scripts PHP para interactuar con la API de Monday.com.
 
 1. Crea un archivo de texto llamado `config.txt` en la misma ubicación que los scripts. 
 2. Abre `config.txt` y agrega tu API Token y el ID de la tarea en el siguiente formato:  
-  
+
+  ```
 API_MONDAY  
 <<URL_API_DE_MONDAY>>  
   
@@ -21,7 +22,7 @@ SLAK_TOKEN
 
 ITEM_ID
 <<ID_DE_TAREA>>
-  
+  ```
 Reemplazando <<...>> con los valores correspondientes.  
 
 ## Script.php
