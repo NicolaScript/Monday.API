@@ -2,9 +2,13 @@ MONDAY_API:
 https://api.monday.com/v2
 
 MONDAY_ADMIN_TOKEN
-
+...
 
 MONDAY_USER_TOKEN
-
+...
 
 SLAK_TOKEN
+...
+
+ITEM_ID
+...
